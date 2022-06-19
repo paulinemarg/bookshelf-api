@@ -16,7 +16,9 @@ app.get('/', (req, res) => {
   res.send('Welcome to Bookshelf!');
 });
 
-app.get('/books', function (req, res) {
+//------------------Book Requests---------------//
+app.get('/books', 
+  function (req, res) {
     books.find().populate('Author').populate('Genre')
       .then((books) => {
         res.status(200).json(books);
@@ -38,6 +40,63 @@ app.get('/books/:Name',
     res.status(500).send('Error: ' + err);
   })
 });
+
+app.get('/users/:Username/books',
+  (req, res) => {
+    Users.findOne({ Username: req.params.Username })
+    .then((user) => {
+      res.json(user);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+  }
+);
+
+app.post('/users/:Username/books/:BookID', 
+  (req, res) => {
+    Users.findOneAndUpdate({
+      Username: req.params.Username
+    }, {
+      $push: { 
+        FavoriteBooks: req.params.BookID
+      }
+    }, {
+      new: true
+    }, 
+    (err, updateUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      } else {
+        res.json(updateUser);
+      }
+    });
+  }
+);
+
+app.delete('/users/:Username/books/:BookID',
+  (req, res) => {
+    Users.findOneAndUpdate({
+      Username: req.params.Username
+    }, {
+      $pull: {
+        FavoriteBooks: req.params.BookID
+      }
+    }, {
+      new: true
+    },
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      } else {
+        res.json(updatedUser);
+      }
+    });
+  }
+);
 
 app.listen(8080, () => {
   console.log('My app is listening on port 8080.');
