@@ -98,6 +98,29 @@ app.delete('/users/:Username/books/:BookID',
   }
 );
 
+//------------------Genre Requests---------------//
+app.get('/genres', (req, res) => {
+  Genres.find()
+    .then((genre) => {
+      res.status(200).json(genre);
+    }).catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
+app.get('/genres/:Name', (req, res) => {
+  Genres.findOne({
+    Name: req.params.Name
+  })
+    .then((genre) => {
+      res.json(genre);
+    }).catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
 app.listen(8080, () => {
   console.log('My app is listening on port 8080.');
 });
