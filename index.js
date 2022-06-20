@@ -98,6 +98,29 @@ app.delete('/users/:Username/books/:BookID',
   }
 );
 
+//------------------Author Requests---------------//
+app.get('/authors', (req, res) => {
+  Authors.find()
+  .then((author) => {
+    res.status(200).json(author);
+  }).catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  });
+});
+
+app.get('/authors/:Name', (req, res) => {
+  Authors.findOne({
+    Name: req.params.Name
+  })
+    .then((author) => {
+      res.json(author);
+    }).catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
 //------------------Genre Requests---------------//
 app.get('/genres', (req, res) => {
   Genres.find()
