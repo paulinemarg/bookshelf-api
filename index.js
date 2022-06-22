@@ -1,4 +1,5 @@
-const bodyParser = require('body-parser'),
+const mongoose = require('mongoose'),
+      bodyParser = require('body-parser'),
       express = require('express'),
       morgan = require('morgan'),
       uuid = require('uuid');
