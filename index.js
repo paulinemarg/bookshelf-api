@@ -1,7 +1,9 @@
-const bodyParser = require('body-parser'),
-      express = require('express'),
-      morgan = require('morgan'),
-      uuid = require('uuid');
+const mongoose = require('mongoose');
+const Models = require('./models.js');
+const bodyParser = require('body-parser');
+const express = require('express');
+const morgan = require('morgan');
+const uuid = require('uuid');
 
 const app = express();
 
@@ -11,6 +13,8 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(bodyParser.json());
+
+mongoose.connect('mongodb://localhost:27017/bookshelfDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.get('/', (req, res) => {
   res.send('Welcome to Bookshelf!');
