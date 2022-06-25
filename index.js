@@ -9,12 +9,17 @@ const app = express();
 
 app.use(morgan('common'));
 app.use(express.static('public'));
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-app.use(bodyParser.json());
+
+const passport = require('passport');
+require('./passport');
 
 mongoose.connect('mongodb://localhost:27017/bookshelfDB', { useNewUrlParser: true, useUnifiedTopology: true });
+
+const auth = require('./auth')(app);
 
 app.get('/', (req, res) => {
   res.send('Welcome to Bookshelf!');
