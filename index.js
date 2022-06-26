@@ -7,6 +7,11 @@ const uuid = require('uuid');
 
 const app = express();
 
+const Books = Models.Book;
+const Users = Models.User;
+const Genres = Models.Genre;
+const Author = Models.Author;
+
 app.use(morgan('common'));
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -27,8 +32,9 @@ app.get('/', (req, res) => {
 
 //------------------Book Requests---------------//
 app.get('/books', 
+  passport.authenticate('jwt', { session: false }),
   function (req, res) {
-    books.find().populate('Author').populate('Genre')
+    Books.find().populate('Author').populate('Genre')
       .then((books) => {
         res.status(200).json(books);
       }).catch((err) => {
@@ -38,6 +44,7 @@ app.get('/books',
   });
 
 app.get('/books/:Name',
+passport.authenticate('jwt', { session: false }),
 (req, res) => {
   Books.findOne({
     Name: req.params.Name
@@ -51,6 +58,7 @@ app.get('/books/:Name',
 });
 
 app.get('/users/:Username/books',
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Users.findOne({ Username: req.params.Username })
     .then((user) => {
@@ -64,6 +72,7 @@ app.get('/users/:Username/books',
 );
 
 app.post('/users/:Username/books/:BookID', 
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Users.findOneAndUpdate({
       Username: req.params.Username
@@ -86,6 +95,7 @@ app.post('/users/:Username/books/:BookID',
 );
 
 app.delete('/users/:Username/books/:BookID',
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Users.findOneAndUpdate({
       Username: req.params.Username
@@ -109,6 +119,7 @@ app.delete('/users/:Username/books/:BookID',
 
 //------------------Author Requests---------------//
 app.get('/authors', (req, res) => {
+  passport.authenticate('jwt', { session: false }),
   Authors.find()
   .then((author) => {
     res.status(200).json(author);
@@ -119,7 +130,8 @@ app.get('/authors', (req, res) => {
 });
 
 app.get('/authors/:Name', (req, res) => {
-  Authors.findOne({
+  passport.authenticate('jwt', { session: false }),
+  Author.findOne({
     Name: req.params.Name
   })
     .then((author) => {
@@ -132,6 +144,7 @@ app.get('/authors/:Name', (req, res) => {
 
 //------------------Genre Requests---------------//
 app.get('/genres', (req, res) => {
+  passport.authenticate('jwt', { session: false }),
   Genres.find()
     .then((genre) => {
       res.status(200).json(genre);
@@ -142,6 +155,7 @@ app.get('/genres', (req, res) => {
 });
 
 app.get('/genres/:Name', (req, res) => {
+  passport.authenticate('jwt', { session: false }),
   Genres.findOne({
     Name: req.params.Name
   })
@@ -155,6 +169,7 @@ app.get('/genres/:Name', (req, res) => {
 
 //------------------User Requests---------------//
 app.get('/users', (req, res) => {
+  passport.authenticate('jwt', { session: false }),
   Users.find()
     .then((users) => {
       res.status(201).json(users);
@@ -165,6 +180,7 @@ app.get('/users', (req, res) => {
 });
 
 app.get('/users/:Username', (req, res) => {
+  passport.authenticate('jwt', { session: false }),
   Users.findOne({
     Username: req.params.Username
   })
@@ -205,6 +221,7 @@ app.post('/users', (req, res) => {
 });
 
 app.put('/users/:Username', (req, res) => {
+  passport.authenticate('jwt', { session: false }),
   Users.findOneAndUpdate({
     Username: req.params.Username
   }, {
@@ -229,6 +246,7 @@ app.put('/users/:Username', (req, res) => {
 
 
 app.delete('/users/:Username', (req, res) => {
+  passport.authenticate('jwt', { session: false }),
   Users.findOneAndDelete({
     Username: req.params.Username
   }).then((user) => {
