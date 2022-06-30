@@ -1,16 +1,15 @@
 const mongoose = require('mongoose');
 const Models = require('./models.js');
-const bodyParser = require('body-parser');
 const express = require('express');
 const morgan = require('morgan');
-const uuid = require('uuid');
+const bodyParser = require('body-parser');
 
 const app = express();
 
 const Books = Models.Book;
 const Users = Models.User;
 const Genres = Models.Genre;
-const Author = Models.Author;
+const Authors = Models.Author;
 
 app.use(morgan('common'));
 app.use(express.static('public'));
