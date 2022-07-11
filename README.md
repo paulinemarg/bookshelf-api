@@ -14,3 +14,16 @@ Users will be able to sign up, update their personal information, and create a l
 - Node.js
 - Javascript
 - Express
+
+## This project is built with the following tools
+
+<ul>
+    <li>The API is a Node.js and Express application</li>
+    <li>The API uses the REST(ful) architecture</li>
+    <li>The API contains of more than 3 middleware modules</li>
+    <li>The API uses a 'package.json'-File</li>
+    <li>The database is built using MongoDB</li>
+    <li>The business logic was modeled with Mongoose</li>
+    <li>The API provides movie information in JSON Format</li>
+    <li>The API includes user authentication and authorization code</li>
+</ul>
