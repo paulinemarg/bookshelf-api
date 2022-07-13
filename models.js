@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 let bookSchema = mongoose.Schema({
   Name: {type: String, required: true},
